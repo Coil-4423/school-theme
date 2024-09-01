@@ -32,29 +32,13 @@
 	<?php school_theme_post_thumbnail(); ?>
 
 	<div class="entry-content">
-		<?php
-		the_content(
-			sprintf(
-				wp_kses(
-					/* translators: %s: Name of current post. Only visible to screen readers */
-					__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'school-theme' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
-				),
-				wp_kses_post( get_the_title() )
-			)
-		);
-
-		wp_link_pages(
-			array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'school-theme' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
+	<?php 
+if ( is_single() ) {
+    the_content();
+} else {
+    the_excerpt();
+}
+?>
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">

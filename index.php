@@ -9,48 +9,66 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package school-theme
+ * @package FWD_Starter_Theme
  */
 
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+<main id="primary" class="site-main">
 
-		<?php
-		if ( have_posts() ) :
+    <?php
+    // Custom query for posts
+    $args = array(
+        'post_type' => 'post', // Adjust this if you're querying a custom post type
+        'orderby' => 'date',
+        'order' => 'DESC', // Use 'ASC' for ascending order
+    );
 
-			if ( is_home() && ! is_front_page() ) :
-				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-				<?php
-			endif;
+    $custom_query = new WP_Query($args);
 
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+    if ($custom_query->have_posts()) :
 
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
+        // Optional: Display the page title if it's a blog page
+        if (is_home() && !is_front_page()) :
+            ?>
+            <header>
+                <h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
+            </header>
+            <?php
+        endif;
 
-			endwhile;
+        // Start the Loop
+        while ($custom_query->have_posts()) :
+            $custom_query->the_post();
 
-			the_posts_navigation();
+            /*
+             * Include the Post-Type-specific template for the content.
+             * If you want to override this in a child theme, then include a file
+             * called content-___.php (where ___ is the Post Type name) and that will be used instead.
+             */
+            get_template_part('template-parts/content', get_post_type());
+			?>
+			<hr>
+			<?php
 
-		else :
+        endwhile;
 
-			get_template_part( 'template-parts/content', 'none' );
+        // Display navigation to next/previous pages when applicable
+        the_posts_navigation();
 
-		endif;
-		?>
+        // Reset post data
+        wp_reset_postdata();
 
-	</main><!-- #main -->
+    else :
+
+        // If no content, include the "No posts found" template
+        get_template_part('template-parts/content', 'none');
+
+    endif;
+    ?>
+
+</main><!-- #primary -->
 
 <?php
 get_sidebar();
