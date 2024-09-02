@@ -46,6 +46,8 @@ function school_theme_setup() {
 		*/
 	add_theme_support( 'post-thumbnails' );
 
+	//Our Custom Image Crop Sizes
+	add_image_size( 'recent-news', 400, 200, true );
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
@@ -99,6 +101,13 @@ function school_theme_setup() {
 			'flex-height' => true,
 		)
 	);
+
+	 // Add support for wide and full-width alignment
+	 add_theme_support( 'align-wide' );
+
+	 // Add other block editor features support
+	 add_theme_support( 'wp-block-styles' );
+	 add_theme_support( 'responsive-embeds' );
 }
 add_action( 'after_setup_theme', 'school_theme_setup' );
 

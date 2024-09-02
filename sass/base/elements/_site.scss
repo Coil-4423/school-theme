@@ -1,0 +1,12 @@
+.site {
+    max-width: 2200px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 1000px) 1fr;
+    grid-template-areas:
+        "header header header"
+        ". main ."
+        ". sidebar ."
+        "footer footer footer";
+}

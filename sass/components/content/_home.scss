@@ -1,0 +1,38 @@
+@media only screen and (min-width: 50em) {
+    .home .blog-posts {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .home .blog-posts h2 {
+        width: 100%;
+    }
+
+    .home .blog-posts a {
+        margin: 0 .5em 1em;
+    }
+}
+
+.home .blog-posts a {
+    position: relative;
+    display: block;
+    margin: 0 auto 1em;
+    max-width: 300px;
+}
+
+.home .blog-posts h3 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    margin: 0;
+    padding: 1em;
+    font-size: 1em;
+    text-align: center;
+    background: rgba(255, 255, 255, .8);
+}
+
+.home .blog-posts img {
+    display: block;
+}

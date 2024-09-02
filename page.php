@@ -30,6 +30,45 @@ get_header();
 
 		endwhile; // End of the loop.
 		?>
+		<section class='blog-posts'>
+		<h2><?php esc_html_e('Recent News',  'fwd'); ?></h2>
+                <?php 
+                $args = array(
+                    'post_type' => 'post',
+                    'posts_per_page'=>3,
+                );
+				$blog_query = new WP_Query($args);
+                if($blog_query -> have_posts()){
+                    while($blog_query -> have_posts()){
+                        $blog_query -> the_post();
+                        ?>
+                        <article>
+                            <a href="<?php the_permalink(); ?>">
+                                <h3><?php the_title(); ?></h3>
+                                <?php
+					the_post_thumbnail(
+                        'recent-news',
+						array(
+                            'alt' => the_title_attribute(
+                                array(
+                                    'echo' => false,
+                                    )
+                                ),
+                                )
+                            );
+                            // the_post_thumbnail('large'); 
+                            ?>
+                            <!-- <p class="post-date"><?php echo get_the_date(); ?></p> -->
+                            </a>
+                            <!-- Add the excerpt here -->
+                        </article>
+                        <?php
+            
+                    }
+                    wp_reset_postdata();
+                }
+		?>
+		</section>
 
 	</main><!-- #main -->
 
