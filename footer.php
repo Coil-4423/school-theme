@@ -13,6 +13,12 @@
 
 	<footer id="colophon" class="site-footer">
 		<div class="site-info">
+		<?php 
+if ( function_exists( 'the_custom_logo' ) ) {
+    the_custom_logo(); 
+}
+?>
+
 			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'school-theme' ) ); ?>">
 				<?php
 				/* translators: %s: CMS name, i.e. WordPress. */

@@ -185,3 +185,86 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+require get_template_directory() . '/inc/cpt-taxonomy.php';
+
+//Define a Block Editor Template for the Students CPT
+
+function student_block_editor_template( $post_type, $post ) {
+    if ( 'student' === $post_type ) {
+        $template = array(
+            array( 'core/paragraph', array(
+                'placeholder' => 'Add student biography here...',
+            ) ),
+            array( 'core/button', array(
+                'text' => 'Portfolio',
+                'url'  => '', // Can be filled later by the user
+            ) ),
+        );
+
+        $template_lock = 'all'; // Prevents adding, removing, and moving blocks
+
+        // Set block template and lock the blocks
+        add_filter( 'block_editor_settings_all', function( $settings ) use ( $template, $template_lock ) {
+            $settings['template'] = $template;
+            $settings['templateLock'] = $template_lock;
+            return $settings;
+        });
+    }
+}
+add_action( 'add_meta_boxes', 'student_block_editor_template', 10, 2 );
+
+
+// Change the placeholder for the title input field for Student CPT
+function change_student_title_placeholder( $title ){
+    $screen = get_current_screen();
+
+    if ( 'student' == $screen->post_type ) {
+        $title = 'Add student name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'change_student_title_placeholder' );
+
+
+// Create taxonomy terms Designer and Developer in Speciality taxonomy
+function create_speciality_taxonomy_terms() {
+    $terms = array( 'Designer', 'Developer' );
+    $taxonomy = 'speciality';
+
+    foreach ( $terms as $term ) {
+        if ( ! term_exists( $term, $taxonomy ) ) {
+            wp_insert_term( $term, $taxonomy );
+        }
+    }
+}
+add_action( 'init', 'create_speciality_taxonomy_terms' );
+
+// Register a new image size for student featured images
+function register_custom_image_sizes() {
+    add_image_size( 'custom-size', 200, 300, true ); // Cropped image to exactly 200x300 pixels
+}
+add_action( 'after_setup_theme', 'register_custom_image_sizes' );
+
+//change excerpt length to 20 words
+function fwd_excerpt_length($length){
+	return 20;
+}
+
+add_filter('excerpt_length', 'fwd_excerpt_length', 999);
+
+function fwd_excerpt_more( $more ) {
+    $more = '... <a class="read-more" href="' . esc_url( get_permalink() ) . '">Read more</a>';
+    return $more;
+}
+add_filter( 'excerpt_more', 'fwd_excerpt_more' );
+
+function register_my_menus() {
+    register_nav_menus(
+        array(
+            'header-menu' => __( 'Header Menu' ),
+            'footer-menu' => __( 'Footer Menu' )
+        )
+    );
+}
+add_action( 'init', 'register_my_menus' );
