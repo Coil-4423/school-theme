@@ -150,12 +150,13 @@ function school_theme_scripts() {
 	wp_enqueue_style( 'school-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'school-theme-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'school-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-
+	// wp_enqueue_script( 'school-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'school-theme-navigation', get_template_directory_uri() . '/js/nav.js', array(), _S_VERSION, true);
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
+
 add_action( 'wp_enqueue_scripts', 'school_theme_scripts' );
 
 /**
@@ -268,3 +269,22 @@ function register_my_menus() {
     );
 }
 add_action( 'init', 'register_my_menus' );
+
+function allow_table_tags_in_acf() {
+    global $allowedposttags;
+    $allowedposttags['table'] = array();
+    $allowedposttags['thead'] = array();
+    $allowedposttags['tbody'] = array();
+    $allowedposttags['tr'] = array();
+    $allowedposttags['th'] = array(
+        'colspan' => array(),
+        'rowspan' => array(),
+        'scope'   => array(),
+    );
+    $allowedposttags['td'] = array(
+        'colspan' => array(),
+        'rowspan' => array(),
+        'headers' => array(),
+    );
+}
+add_action('init', 'allow_table_tags_in_acf');

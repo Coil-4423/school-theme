@@ -45,9 +45,18 @@
 			<?php endif; ?>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'school-theme' ); ?></button>
-			<?php
+		<div class="hamburger">
+		  <span class="line"></span>
+		  <span class="line"></span>
+		  <span class="line"></span>
+		</div>
+		<!-- <nav id="site-navigation" class="main-navigation">
+		<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+    		<img src="<?php echo esc_url( get_template_directory_uri() . '/images/iconmonstr-menu-lined.svg' ); ?>" alt="<?php esc_attr_e( 'Menu Icon', 'school-theme' ); ?>" />
+		</button>
+		</nav> -->
+		<div class="nav__link hide">
+		<?php
 			wp_nav_menu(
 				array(
 					'theme_location' => 'header-menu', // Ensure this matches your registered menu
@@ -56,5 +65,6 @@
 				)
 			);
 			?>
-		</nav><!-- #site-navigation -->
+		</div>
 	</header><!-- #masthead -->
+	
