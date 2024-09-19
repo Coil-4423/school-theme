@@ -204,7 +204,7 @@ function student_block_editor_template( $post_type, $post ) {
 
         $template_lock = 'all'; // Prevents adding, removing, and moving blocks
 
-        // Set block template and lock the blocks
+        //Set block template and lock the blocks
         add_filter( 'block_editor_settings_all', function( $settings ) use ( $template, $template_lock ) {
             $settings['template'] = $template;
             $settings['templateLock'] = $template_lock;
@@ -247,18 +247,24 @@ function register_custom_image_sizes() {
 }
 add_action( 'after_setup_theme', 'register_custom_image_sizes' );
 
+
+
 //change excerpt length to 20 words
 function fwd_excerpt_length($length){
-	return 20;
+	return 25;
 }
 
 add_filter('excerpt_length', 'fwd_excerpt_length', 999);
 
-function fwd_excerpt_more( $more ) {
-    $more = '... <a class="read-more" href="' . esc_url( get_permalink() ) . '">Read more</a>';
+function fwd_student_excerpt_more( $more ) {
+    // Check if it's a student custom post type archive or a student list template
+    if ( is_post_type_archive( 'student' ) || is_page_template( 'page-students.php' ) ) {
+        $more = '<br>'.'<a class="read-more" href="' . esc_url( get_permalink() ) . '">' . __( 'Read More about the Student...', 'fwd' ) . '</a>';
+    }
     return $more;
 }
-add_filter( 'excerpt_more', 'fwd_excerpt_more' );
+add_filter( 'excerpt_more', 'fwd_student_excerpt_more' );
+
 
 function register_my_menus() {
     register_nav_menus(
@@ -288,3 +294,19 @@ function allow_table_tags_in_acf() {
     );
 }
 add_action('init', 'allow_table_tags_in_acf');
+
+
+function change_staff_title_placeholder( $title, $post ) {
+    if ( 'staff' == $post->post_type ) { // 'staff' is the post type slug
+        $title = 'Add staff name';
+    }
+    return $title;
+}
+add_filter( 'enter_title_here', 'change_staff_title_placeholder', 10, 2 );
+
+// Change excerpt length to 25 words and custom "read more" link
+function custom_trimmed_excerpt( $content, $post_id ) {
+    $excerpt = wp_trim_words( $content, 25, '<a href="' . get_permalink( $post_id ) . '">' . __( 'Read More about the Student...', 'fwd' ) . '</a>' );
+    return $excerpt;
+}
+?>

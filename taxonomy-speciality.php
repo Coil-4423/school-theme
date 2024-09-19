@@ -8,24 +8,26 @@ get_header(); ?>
         <p><?php echo term_description(); ?></p> <!-- Term description, if available -->
     </header>
 
-    <?php if ( have_posts() ) : ?>
+    <?php if (have_posts()) : ?>
         <div class="student-list">
-            <?php while ( have_posts() ) : the_post(); ?>
+            <?php while (have_posts()) : the_post(); ?>
 
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <a href="<?php the_permalink(); ?>">
                         <h2><?php the_title(); ?></h2> <!-- Student name -->
                     </a>
+                    <div class='student-info'>
+                        <?php if (has_post_thumbnail()) : ?>
+                            <div class="student-thumbnail">
+                                <?php the_post_thumbnail('custom-size'); ?> <!-- Display featured image with custom size -->
+                            </div>
+                        <?php endif; ?>
 
-                    <?php if ( has_post_thumbnail() ) : ?>
-                        <div class="student-thumbnail">
-                            <?php the_post_thumbnail( 'custom-size' ); ?> <!-- Display featured image with custom size -->
+                        <div class="student-content">
+                            <?php the_content(); ?>
                         </div>
-                    <?php endif; ?>
-
-                    <div class="student-content">
-                        <?php the_content(); ?> <!-- Display full content -->
                     </div>
+
                 </article>
 
             <?php endwhile; ?>
@@ -34,7 +36,7 @@ get_header(); ?>
         <?php the_posts_navigation(); ?>
 
     <?php else : ?>
-        <p><?php esc_html_e( 'No students found for this speciality.', 'school-theme' ); ?></p>
+        <p><?php esc_html_e('No students found for this speciality.', 'school-theme'); ?></p>
     <?php endif; ?>
 
 </main>
