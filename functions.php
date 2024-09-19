@@ -309,4 +309,22 @@ function custom_trimmed_excerpt( $content, $post_id ) {
     $excerpt = wp_trim_words( $content, 25, '<a href="' . get_permalink( $post_id ) . '">' . __( 'Read More about the Student...', 'fwd' ) . '</a>' );
     return $excerpt;
 }
+
+function enqueue_aos_for_posts() {
+    if ( is_singular( 'post' ) || is_home() || is_archive() ) {
+		// Enqueue the main compiled CSS (which includes AOS styles from your SCSS)
+        wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
+		
+        // Enqueue the main CSS (which now includes AOS styles)
+        wp_enqueue_style( 'aos-css', get_template_directory_uri() . '/aos/aos.css', array(), '3.0.0' );
+
+        // Enqueue AOS JS
+        wp_enqueue_script( 'aos-js', get_template_directory_uri() . '/aos/aos.js', array(), '3.0.0', true );
+
+        // Initialize AOS
+        wp_add_inline_script( 'aos-js', 'AOS.init();' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_aos_for_posts' );
+
 ?>
