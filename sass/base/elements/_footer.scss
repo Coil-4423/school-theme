@@ -1,20 +1,93 @@
-@media screen and (min-width: 62.5em) {
-    .site-footer {
-        padding: 2rem 1rem;
-        text-align: left;
-        display: grid;
-        grid-template-columns: 1fr repeat(3, minmax(auto, 20.83rem)) 1fr;
-    }
-}
-
+/* General Footer Styles */
 .site-footer {
     background-color: #333;
-    margin-top: 20px;
-    padding: 1rem;
-    font-size: .875rem;
     color: #fff;
+    padding: 2rem 1rem;
+    font-size: 0.875rem;
     text-align: center;
+    margin-top: 20px;
 }
-.site-footer {
-    grid-area: footer;
+
+/* Footer layout for desktop */
+// @media screen and (min-width: 62.5em) {
+    .site-footer {
+        text-align: left;
+        padding: 2rem 1rem;
+    }
+    .site-info {
+        text-align: left;
+    }
+    .footer-links, .footer-courtesy {
+        // text-align: right;
+    }
+    .custom-logo-link {
+        grid-column: 1; 
+    }
+// }
+
+// /* Mobile Footer Styles */
+// @media screen and (max-width: 62.5em) {
+//     .site-footer {
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//     }
+//     .site-info {
+//         margin-top: 1rem;
+//         text-align: center;
+//         // display: flex;
+//         // justify-content: start;
+//     }
+//     .custom-logo-link {
+//         width: 100%;
+//         margin-bottom: 1rem;
+//         display: flex;
+//         justify-content: start;
+//     }
+//     .footer-links, .footer-courtesy {
+//         width:100%;
+//         margin-top: 1rem;
+//         // text-align: center;
+//         display: flex;
+//         justify-content: start;
+//     }
+// }
+
+/* Adjust the logo size */
+.custom-logo-link img {
+    max-width: 100px; /* Adjust the size of the logo */
+    height: auto;
+}
+
+/* Styling the links */
+.site-footer a {
+    color: #ddd;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.site-footer a:hover {
+    color: #fff;
+}
+
+/* Footer link styling */
+.footer-links a {
+    color: #ddd;
+    margin-right: 0.5rem;
+}
+.footer-links a:last-child {
+    margin-right: 0; /* No extra space after the last link */
+}
+
+/* Footer Courtesy Styling */
+.footer-courtesy {
+    margin-top: 1rem;
+    color: #aaa;
+    font-size: 0.75rem;
+}
+.footer-courtesy a {
+    color: #ddd;
+    text-decoration: underline;
+}
+.footer-courtesy a:hover {
+    color: #fff;
 }

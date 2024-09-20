@@ -95,8 +95,8 @@ function school_theme_setup() {
 	add_theme_support(
 		'custom-logo',
 		array(
-			'height'      => 250,
-			'width'       => 250,
+			'height'      => 100,
+			'width'       => 100,
 			'flex-width'  => true,
 			'flex-height' => true,
 		)
@@ -326,5 +326,18 @@ function enqueue_aos_for_posts() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_aos_for_posts' );
+
+
+function enqueue_toggle_dropdown(){
+	wp_enqueue_script( 'toggle-dropdown', get_template_directory_uri() . '/js/toggle-dropdown.js', array(), '1.0.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_toggle_dropdown' );
+
+
+function school_theme_enqueue_styles() {
+    // Enqueue Google Fonts
+    wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap', false );
+}
+add_action( 'wp_enqueue_scripts', 'school_theme_enqueue_styles' );
 
 ?>
