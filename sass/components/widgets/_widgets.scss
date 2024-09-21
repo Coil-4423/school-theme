@@ -6,3 +6,20 @@
 		max-width: 100%;
 	}
 }
+
+.widget-area{
+	max-width: 1000px;
+	margin:0 auto;
+	display: grid;
+	grid-template-columns: auto auto;
+}
+
+.wp-block-search__inside-wrapper{
+	display: flex;
+	flex-direction: column;
+	max-width: 200px;
+}
+
+.wp-block-search__button{
+	margin:0;
+}
